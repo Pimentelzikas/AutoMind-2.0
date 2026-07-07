@@ -473,7 +473,7 @@
                 chatBox.scrollTop = chatBox.scrollHeight; // Rola scroll para o final
 
                 // 2. Envia os dados para o Discord usando a API Webhook por método POST
-                if (DISCORD_WEBHOOK_URL && DISCORD_WEBHOOK_URL !== 'SUA_WEBHOOK_DO_DISCORD_AQUI') {
+                if (DISCORD_WEBHOOK_URL && DISCORD_WEBHOOK_URL !== 'https://discord.com/api/webhooks/1524004925497934025/VroYhFuMw76PR8Yulop143QHP3tQ22rm6QWvB9mjLOBJDncXQIg0LgEGSMUr4hTCiPLH') {
                     try {
                         await fetch(DISCORD_WEBHOOK_URL, {
                             method: 'POST',
