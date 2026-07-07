@@ -47,7 +47,7 @@
             background: rgba(3, 3, 3, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-b: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         /* Premium Bento Cards com Neon Glow Integrado */
@@ -436,10 +436,8 @@
     </footer>
 
     <script>
-        // Substitua pela URL real do seu Webhook do canal do Discord
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1524004925497934025/VroYhFuMw76PR8Yulop143QHP3tQ22rm6QWvB9mjLOBJDncXQIg0LgEGSMUr4hTCiPLH';
 
-        // Função para Abrir (true) ou Fechar (false) o Modal do Chat
         function toggleChat(show) {
             const modal = document.getElementById('consultor-modal');
             if (show) {
@@ -456,7 +454,7 @@
             const chatBox = document.getElementById('chat-box');
 
             if (message) {
-                // 1. Renderiza a mensagem do usuário localmente na janela do chat
+                // 1. Adiciona a mensagem do usuário na tela
                 const userMsgHTML = `
                     <div class="flex items-end gap-3 flex-row-reverse">
                         <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
@@ -469,35 +467,33 @@
                     </div>
                 `;
                 chatBox.insertAdjacentHTML('beforeend', userMsgHTML);
-                input.value = ''; // Reseta caixa de texto
-                chatBox.scrollTop = chatBox.scrollHeight; // Rola scroll para o final
+                input.value = ''; 
+                chatBox.scrollTop = chatBox.scrollHeight; 
 
-                // 2. Envia os dados para o Discord usando a API Webhook por método POST
-                if (DISCORD_WEBHOOK_URL && DISCORD_WEBHOOK_URL !== 'https://discord.com/api/webhooks/1524004925497934025/VroYhFuMw76PR8Yulop143QHP3tQ22rm6QWvB9mjLOBJDncXQIg0LgEGSMUr4hTCiPLH') {
-                    try {
-                        await fetch(DISCORD_WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                embeds: [{
-                                    title: "📱 Nova Mensagem de Suporte/Vendas - AutoMind",
-                                    description: message,
-                                    color: 26367, // Código de Cor Azul Primária (#0066FF)
-                                    timestamp: new Date().toISOString(),
-                                    footer: {
-                                        text: "Enviado via Chat Corporativo Landing Page"
-                                    }
-                                }]
-                            })
-                        });
-                    } catch (error) {
-                        console.error("Erro ao transmitir mensagem ao servidor do Discord:", error);
-                    }
+                // 2. Envio via API Fetch POST com cabeçalhos estruturados para o Discord
+                try {
+                    await fetch(DISCORD_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            embeds: [{
+                                title: "📱 Nova Mensagem de Suporte/Vendas - AutoMind",
+                                description: message,
+                                color: 26367, // Azul Corporativo (#0066FF)
+                                timestamp: new Date().toISOString(),
+                                footer: {
+                                    text: "Enviado via Chat Corporativo Landing Page"
+                                }
+                            }]
+                        })
+                    });
+                } catch (error) {
+                    console.error("Erro ao transmitir mensagem ao servidor do Discord:", error);
                 }
 
-                // 3. Resposta automática simulada (Apenas para feedback visual ao cliente)
+                // 3. Resposta automática simulada para engajamento do cliente
                 setTimeout(() => {
                     const botMsgHTML = `
                         <div class="flex items-end gap-3">
@@ -516,7 +512,6 @@
             }
         }
 
-        // Permite o envio rápido pressionando a tecla 'Enter' do teclado
         document.getElementById('chat-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 enviarMensagem();
