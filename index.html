@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoMind | Inteligência Artificial Automotiva</title>
     
+    <!-- Google Fonts Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Ícones Phosphor -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,8 +33,10 @@
         }
     </script>
 
+    <!-- Biblioteca Oficial do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
-        /* Reset e Fundo com Grid Cibernético */
         body { 
             background-color: #030303; 
             color: #f4f4f5;
@@ -41,16 +46,12 @@
             background-size: 40px 40px;
             overflow-x: hidden;
         }
-        
-        /* Efeito Frosted Glass Ultra Fino */
         .glass-nav {
             background: rgba(3, 3, 3, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
-        /* Premium Bento Cards com Neon Glow Integrado */
         .bento-card {
             background: linear-gradient(145deg, rgba(15, 15, 18, 0.6) 0%, rgba(9, 9, 11, 0.8) 100%);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -61,8 +62,6 @@
             border-color: rgba(0, 102, 255, 0.3);
             box-shadow: 0 20px 40px rgba(0, 102, 255, 0.08);
         }
-
-        /* Gradientes de Texto Premium */
         .text-neon-gradient {
             background: linear-gradient(135deg, #ffffff 30%, #0066FF 100%);
             -webkit-background-clip: text;
@@ -73,8 +72,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
-        /* Luzes de Fundo Embutidas (Mesh Blobs) */
         .blur-blob-1 {
             position: absolute; width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
@@ -85,27 +82,18 @@
             background: radial-gradient(circle, rgba(0, 200, 83, 0.08) 0%, rgba(0,0,0,0) 70%);
             filter: blur(80px); z-index: -1; animation: float 8s infinite alternate-reverse;
         }
-
         @keyframes float {
             0% { transform: translate(0px, 0px) scale(1); }
             100% { transform: translate(40px, -40px) scale(1.1); }
         }
-        
-        /* Scrollbar customizada para o chat */
-        #chat-box::-webkit-scrollbar {
-            width: 6px;
-        }
-        #chat-box::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        #chat-box::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 10px;
-        }
+        #chat-box::-webkit-scrollbar { width: 6px; }
+        #chat-box::-webkit-scrollbar-track { background: transparent; }
+        #chat-box::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
     </style>
 </head>
 <body class="antialiased selection:bg-primary/30 selection:text-white">
 
+    <!-- NAV BAR -->
     <header class="fixed w-full top-0 z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3 group">
@@ -129,6 +117,7 @@
         </div>
     </header>
 
+    <!-- HERO SECTION -->
     <section id="inicio" class="relative pt-44 pb-24 px-6 min-h-screen flex items-center">
         <div class="blur-blob-1 top-20 right-10"></div>
         <div class="blur-blob-2 bottom-10 left-10"></div>
@@ -153,7 +142,6 @@
             
             <div class="lg:col-span-5 relative w-full h-[450px] bento-card rounded-2xl overflow-hidden p-8 flex flex-col justify-between border-zinc-800/60 shadow-2xl">
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-luminosity"></div>
-                
                 <div class="flex justify-between items-start relative z-10">
                     <div>
                         <span class="text-[10px] uppercase font-mono tracking-widest text-zinc-500 block">Dispositivo ID</span>
@@ -161,7 +149,6 @@
                     </div>
                     <span class="px-2.5 py-1 text-[10px] font-mono bg-primary/10 border border-primary/20 rounded text-primary font-bold">CONECTADO</span>
                 </div>
-                
                 <div class="space-y-4 relative z-10">
                     <div class="flex items-baseline gap-2">
                         <span class="text-6xl font-extrabold font-display tracking-tighter text-white">2.4<span class="text-xl text-zinc-500 font-light">ms</span></span>
@@ -170,7 +157,6 @@
                         <i class="ph-bold ph-waveform text-cyber text-sm animate-pulse"></i> Latência de transmissão de dados via nuvem
                     </p>
                 </div>
-                
                 <div class="w-full h-16 flex items-end gap-1 pt-4 border-t border-zinc-800/60 relative z-10">
                     <div class="w-full bg-primary/20 h-[40%] rounded-sm"></div>
                     <div class="w-full bg-primary/20 h-[60%] rounded-sm"></div>
@@ -182,13 +168,13 @@
         </div>
     </section>
 
+    <!-- BENTO GRID (DESAFIOS) -->
     <section id="problema" class="py-32 px-6 relative bg-black/40 border-y border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="max-w-3xl mb-20">
                 <span class="text-xs font-bold tracking-widest text-primary uppercase block mb-3 font-display">O Cenário Atual</span>
                 <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">O custo de não entender o seu próprio veículo.</h2>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bento-card p-8 rounded-2xl md:col-span-2 flex flex-col justify-between min-h-[260px]">
                     <div class="w-11 h-11 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center text-red-400 text-xl"><i class="ph ph-shield-warning"></i></div>
@@ -197,7 +183,6 @@
                         <p class="text-zinc-400 text-sm font-light max-w-xl">Descobrir falhas graves apenas quando o carro quebra na rodovia gera guinchos caros e orçamentos superfaturados em oficinas mecânicas sem critério.</p>
                     </div>
                 </div>
-
                 <div class="bento-card p-8 rounded-2xl flex flex-col justify-between min-h-[260px]">
                     <div class="w-11 h-11 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 text-xl"><i class="ph ph-eye-slash"></i></div>
                     <div>
@@ -205,7 +190,6 @@
                         <p class="text-zinc-400 text-sm font-light">A luz da injeção eletrônica acende no painel e você fica completamente refém, sem saber se é apenas um combustível adulterado ou um dano crítico no motor.</p>
                     </div>
                 </div>
-
                 <div class="bento-card p-8 rounded-2xl flex flex-col justify-between min-h-[260px]">
                     <div class="w-11 h-11 bg-zinc-800 border border-zinc-700 rounded-xl flex items-center justify-center text-zinc-300 text-xl"><i class="ph ph-chart-line-down"></i></div>
                     <div>
@@ -213,7 +197,6 @@
                         <p class="text-zinc-400 text-sm font-light">Problemas de suspensão e desgaste precoce de cilindros reduzem drasticamente o valor de revenda do automóvel sem que você note no dia a dia.</p>
                     </div>
                 </div>
-
                 <div class="bento-card p-8 rounded-2xl md:col-span-2 flex flex-col justify-between min-h-[260px] bg-gradient-to-r from-zinc-900/50 to-primary/5 border-primary/10">
                     <div class="w-11 h-11 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center text-primary text-xl"><i class="ph-bold ph-sparkle"></i></div>
                     <div>
@@ -225,13 +208,13 @@
         </div>
     </section>
 
+    <!-- RECURSOS TÉCNICOS -->
     <section id="solucoes" class="py-32 px-6 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-24">
                 <span class="text-xs font-bold tracking-widest text-secondary uppercase block mb-3 font-display">Tecnologia Embarcada</span>
                 <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">Funcionalidades do Ecossistema</h2>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bento-card p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
                     <div class="space-y-4">
@@ -258,6 +241,7 @@
         </div>
     </section>
 
+    <!-- CENTRAL DE TELEMETRIA -->
     <section id="dashboard" class="py-32 px-6 relative bg-zinc-950/40 border-t border-zinc-900">
         <div class="blur-blob-1 bottom-10 right-20"></div>
         <div class="max-w-7xl mx-auto">
@@ -287,28 +271,25 @@
                     <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl">
                         <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Líquido de Arrefecimento</span>
                         <div class="text-xl font-bold text-white font-display">92°C</div>
-                        <span class="text-[10px] text-secondary font-mono">Faixa Ideal</span>
                     </div>
                     <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl">
                         <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Voltagem Alternador</span>
                         <div class="text-xl font-bold text-white font-display">14.2 V</div>
-                        <span class="text-[10px] text-secondary font-mono">Carregamento Estável</span>
                     </div>
                     <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl">
                         <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Pressão do Óleo</span>
                         <div class="text-xl font-bold text-white font-display">3.4 Bar</div>
-                        <span class="text-[10px] text-secondary font-mono">Lubrificação OK</span>
                     </div>
                     <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl col-span-2 md:col-span-1">
                         <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Mistura Ar-Combustível</span>
                         <div class="text-xl font-bold text-white font-display">14.7:1</div>
-                        <span class="text-[10px] text-cyber font-mono">Estequiométrica Perfeita</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- PLANOS DE LICENCIAMENTO -->
     <section id="planos" class="py-32 px-6 relative border-t border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-24">
@@ -319,65 +300,54 @@
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center">
                 <div class="bento-card p-8 rounded-2xl flex flex-col min-h-[440px] opacity-80">
                     <h3 class="text-lg font-bold mb-1 text-white font-display">Módulo Standard</h3>
-                    <p class="text-xs text-zinc-500 mb-6">Para motoristas casuais e preventivos.</p>
-                    <div class="text-3xl font-bold font-display text-white mb-6">R$ 39,90<span class="text-xs font-sans font-light text-zinc-500"> /mês</span></div>
-                    
+                    <div class="text-3xl font-bold font-display text-white mb-6">R$ 39,90</div>
                     <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-400 border-t border-zinc-900 pt-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary text-base"></i> Monitoramento OBD Básico</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary text-base"></i> Leitura de Códigos de Falha</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary text-base"></i> Histórico na Nuvem (30 dias)</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Monitoramento OBD Básico</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Alertas Básicos de Saúde</li>
                     </ul>
-                    <button class="w-full py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 font-bold transition text-xs text-white border border-zinc-800">Adquirir Solução</button>
+                    <button class="w-full py-3 rounded-xl bg-zinc-900 text-xs font-bold border border-zinc-800">Adquirir Solução</button>
                 </div>
 
                 <div class="bento-card p-8 rounded-3xl flex flex-col min-h-[480px] border-primary/40 bg-gradient-to-b from-primary/10 via-cardBg to-cardBg relative shadow-[0_0_40px_rgba(0,102,255,0.15)]">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-[10px] font-bold px-3 py-1 rounded-full text-white tracking-widest uppercase font-display">RECOMENDADO</div>
+                    <div class="absolute top-4 right-4 bg-primary/20 border border-primary/30 text-[9px] font-bold text-white tracking-widest uppercase px-2.5 py-1 rounded-md">Mais Vendido</div>
                     <h3 class="text-xl font-bold mb-1 text-white font-display">Módulo Premium</h3>
-                    <p class="text-xs text-zinc-400 mb-6">Análises profundas e predição completa.</p>
-                    <div class="text-4xl font-bold font-display text-primary mb-6">R$ 59,90<span class="text-xs font-sans font-light text-zinc-500"> /mês</span></div>
-                    
-                    <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-300 border-t border-zinc-800 pt-6">
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary text-base"></i> IA Preditiva Avançada (Evita Pane)</li>
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary text-base"></i> Histórico Digital Imutável Sem Limite</li>
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary text-base"></i> Cotação em Rede de Oficinas Credenciadas</li>
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary text-base"></i> Relatórios de Eficiência de Combustível</li>
+                    <div class="text-4xl font-bold font-display text-primary mb-6">R$ 59,90</div>
+                    <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-300 border-t border-zinc-800/40 pt-6">
+                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary"></i> Diagnósticos Preditivos IA</li>
+                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary"></i> Análise de Bateria Avançada</li>
+                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary"></i> Tradutor de Códigos DTC</li>
                     </ul>
-                    <button class="w-full py-3.5 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition-all text-xs shadow-[0_0_20px_rgba(0,102,255,0.3)]">Adquirir Solução</button>
+                    <button class="w-full py-3.5 rounded-xl bg-primary text-white font-bold text-xs shadow-[0_0_20px_rgba(0,102,255,0.4)]">Adquirir Solução</button>
                 </div>
 
                 <div class="bento-card p-8 rounded-2xl flex flex-col min-h-[440px] opacity-80">
                     <h3 class="text-lg font-bold mb-1 text-white font-display">Módulo Fleet (SaaS)</h3>
-                    <p class="text-xs text-zinc-500 mb-6">Para locadoras, frotas e corporativo.</p>
                     <div class="text-3xl font-bold font-display text-white mb-6">Sob Consulta</div>
-                    
                     <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-400 border-t border-zinc-900 pt-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary text-base"></i> Integração Multi-Veículos Unificada</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary text-base"></i> API Aberta para Sistemas ERP</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary text-base"></i> Suporte Dedicado de Engenharia</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Painel Multi-Veículos</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Integração via API Rest</li>
                     </ul>
-                    <button onclick="toggleChat(true)" class="w-full py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 font-bold transition text-xs text-white border border-zinc-800">Falar com Consultor</button>
+                    <button onclick="toggleChat(true)" class="w-full py-3 rounded-xl bg-zinc-900 text-xs font-bold border border-zinc-800">Falar com Consultor</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FORMULÁRIO GOOGLE -->
     <section id="formulario" class="py-32 px-6 relative bg-black/60 border-t border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-bold tracking-widest text-primary uppercase block mb-3 font-display">Participe</span>
                 <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">Deixe seu Feedback</h2>
-                <p class="text-sm text-zinc-400 mt-4 font-light">Ajude a AutoMind a evoluir preenchendo nosso formulário rápido.</p>
             </div>
-            
-            <div class="bento-card p-2 md:p-6 rounded-3xl max-w-4xl mx-auto h-[600px] bg-white/5">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAFAV2zMmxnVkldKS04HmbZf400_BBlySd64neoy0b1Onzaw/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" class="rounded-2xl">Carregando…</iframe>
+            <div class="bento-card p-2 rounded-3xl max-w-4xl mx-auto h-[600px] bg-white/5">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAFAV2zMmxnVkldKS04HmbZf400_BBlySd64neoy0b1Onzaw/viewform?embedded=true" width="100%" height="100%" frameborder="0" class="rounded-2xl">Carregando…</iframe>
             </div>
         </div>
     </section>
 
-    <div id="consultor-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden animate-[fadeIn_0.2s_ease-out]">
+    <!-- MODAL DO CONSULTOR (REAL-TIME VIA SUPABASE) -->
+    <div id="consultor-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden">
         <div class="bento-card rounded-2xl p-6 max-w-2xl w-full h-[550px] flex flex-col bg-black/95 relative border border-zinc-800 shadow-[0_0_50px_rgba(0,102,255,0.15)]">
-            
             <div class="flex justify-between items-center border-b border-zinc-800 pb-4 mb-4">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -385,137 +355,133 @@
                     </div>
                     <div>
                         <h3 class="text-base font-bold text-white font-display">Consultor Técnico AutoMind</h3>
-                        <p class="text-[10px] text-secondary font-mono flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Online agora
-                        </p>
+                        <p class="text-[10px] text-secondary font-mono flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Online</p>
                     </div>
                 </div>
-                <button onclick="toggleChat(false)" class="text-zinc-400 hover:text-white transition p-1">
-                    <i class="ph ph-x text-2xl"></i>
-                </button>
+                <button onclick="toggleChat(false)" class="text-zinc-400 hover:text-white"><i class="ph ph-x text-2xl"></i></button>
             </div>
 
             <div id="chat-box" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1">
-                <div class="flex items-end gap-3">
-                    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0">
-                        <i class="ph-fill ph-headset text-sm"></i>
-                    </div>
-                    <div class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
-                        <p class="text-xs text-zinc-300">Olá! Sou o consultor especialista da AutoMind. Como posso te ajudar com a sua frota ou dúvidas de telemetria hoje?</p>
-                        <span class="text-[9px] text-zinc-600 mt-1.5 block">Agora mesmo</span>
-                    </div>
-                </div>
+                <!-- As mensagens entram aqui dinamicamente -->
             </div>
             
             <div class="flex gap-3 border-t border-zinc-800 pt-4">
-                <input type="text" id="chat-input" placeholder="Digite sua dúvida ou mensagem corporativa..." class="flex-1 bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition">
-                <button onclick="enviarMensagem()" class="bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-xl font-bold transition flex items-center justify-center shadow-[0_0_15px_rgba(0,102,255,0.2)]">
-                    <i class="ph-bold ph-paper-plane-right text-base"></i>
-                </button>
+                <input type="text" id="chat-input" placeholder="Digite sua dúvida ou mensagem..." class="flex-1 bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-primary/50">
+                <button onclick="enviarMensagem()" class="bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-xl font-bold"><i class="ph-bold ph-paper-plane-right"></i></button>
             </div>
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer class="border-t border-zinc-900 bg-[#020202] py-16 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-primary border border-zinc-800">
-                    <i class="ph-fill ph-cpu"></i>
-                </div>
-                <span class="text-base font-bold tracking-tight text-zinc-300 font-display">Auto<span class="text-primary">Mind</span></span>
-            </div>
-            <div class="flex flex-wrap justify-center gap-8 text-xs font-medium text-zinc-500">
-                <a href="#" class="hover:text-white transition-colors">Políticas</a>
-                <a href="#" class="hover:text-white transition-colors">Contrato de Serviço</a>
-                <a href="#" class="hover:text-white transition-colors">Contato Técnico</a>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto text-center mt-12 text-[10px] text-zinc-600 font-mono">
-            &copy; 2026 AutoMind Core Ecosystem. Desenvolvido para Alta Escalabilidade.
+        <div class="max-w-7xl mx-auto text-center text-[10px] text-zinc-600 font-mono">
+            &copy; 2026 AutoMind Core Ecosystem. Todos os direitos reservados.
         </div>
     </footer>
 
+    <!-- LÓGICA DE TELEMETRIA E CONEXÃO DO CHAT -->
     <script>
-        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1524004925497934025/VroYhFuMw76PR8Yulop143QHP3tQ22rm6QWvB9mjLOBJDncXQIg0LgEGSMUr4hTCiPLH';
+        // ==========================================
+        // CONFIGURAÇÃO DO SEU BANCO EM TEMPO REAL:
+        // ==========================================
+        const SUPABASE_URL = 'SUA_SUPABASE_URL_AQUI'; // Cole aqui a URL do seu Supabase
+        const SUPABASE_ANON_KEY = 'SUA_SUPABASE_ANON_KEY_AQUI'; // Cole aqui a chave Anon Public
 
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Gera ou captura o identificador único para isolar as conversas dos clientes
+        let sessionId = localStorage.getItem('automind_chat_session');
+        if (!sessionId) {
+            sessionId = 'user_' + Math.random().toString(36).substring(2, 11);
+            localStorage.setItem('automind_chat_session', sessionId);
+        }
+
+        // Abre e fecha a janela flutuante do chat
         function toggleChat(show) {
             const modal = document.getElementById('consultor-modal');
             if (show) {
                 modal.classList.remove('hidden');
+                carregarMensagens(); // Puxa histórico de conversas anteriores
                 document.getElementById('chat-input').focus();
             } else {
                 modal.classList.add('hidden');
             }
         }
 
-        async function enviarMensagem() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            const chatBox = document.getElementById('chat-box');
+        // Faz o carregamento inicial do histórico do banco PostgreSQL
+        async function carregarMensagens() {
+            const { data, error } = await _supabase
+                .from('chat_messages')
+                .select('*')
+                .eq('session_id', sessionId)
+                .order('created_at', { ascending: true });
 
-            if (message) {
-                // 1. Adiciona a mensagem do usuário na tela
-                const userMsgHTML = `
-                    <div class="flex items-end gap-3 flex-row-reverse">
-                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
-                            <i class="ph-fill ph-user text-sm"></i>
-                        </div>
-                        <div class="bg-primary p-3 rounded-tl-xl rounded-br-xl rounded-bl-xl max-w-[85%] shadow-[0_0_15px_rgba(0,102,255,0.15)]">
-                            <p class="text-xs text-white">${message}</p>
-                            <span class="text-[9px] text-blue-200 mt-1 block text-right">Agora mesmo</span>
+            if (error) return console.error("Erro ao puxar dados:", error);
+
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = ''; // Reseta tela
+
+            data.forEach(msg => renderizarMensagem(msg.message, msg.is_admin));
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Estrutura gráfica das bolhas de resposta na tela
+        function renderizarMensagem(texto, isAdmin) {
+            const chatBox = document.getElementById('chat-box');
+            let msgHTML = '';
+
+            if (isAdmin) {
+                // Bolha do administrador (Você respondendo do painel)
+                msgHTML = `
+                    <div class="flex items-end gap-3">
+                        <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0"><i class="ph-fill ph-headset text-sm"></i></div>
+                        <div class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
+                            <p class="text-xs text-zinc-300">${texto}</p>
                         </div>
                     </div>
                 `;
-                chatBox.insertAdjacentHTML('beforeend', userMsgHTML);
-                input.value = ''; 
-                chatBox.scrollTop = chatBox.scrollHeight; 
-
-                // 2. Envio via API Fetch POST com cabeçalhos estruturados para o Discord
-                try {
-                    await fetch(DISCORD_WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            embeds: [{
-                                title: "📱 Nova Mensagem de Suporte/Vendas - AutoMind",
-                                description: message,
-                                color: 26367, // Azul Corporativo (#0066FF)
-                                timestamp: new Date().toISOString(),
-                                footer: {
-                                    text: "Enviado via Chat Corporativo Landing Page"
-                                }
-                            }]
-                        })
-                    });
-                } catch (error) {
-                    console.error("Erro ao transmitir mensagem ao servidor do Discord:", error);
-                }
-
-                // 3. Resposta automática simulada para engajamento do cliente
-                setTimeout(() => {
-                    const botMsgHTML = `
-                        <div class="flex items-end gap-3">
-                            <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0">
-                                <i class="ph-fill ph-headset text-sm"></i>
-                            </div>
-                            <div class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
-                                <p class="text-xs text-zinc-300">Recebemos sua solicitação! Nossa equipe comercial recebeu o alerta no painel de atendimento e entrará em contato em instantes.</p>
-                                <span class="text-[9px] text-zinc-600 mt-1.5 block">Recebida</span>
-                            </div>
+            } else {
+                // Bolha do usuário logado no site
+                msgHTML = `
+                    <div class="flex items-end gap-3 flex-row-reverse">
+                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0"><i class="ph-fill ph-user text-sm"></i></div>
+                        <div class="bg-primary p-3 rounded-tl-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
+                            <p class="text-xs text-white">${texto}</p>
                         </div>
-                    `;
-                    chatBox.insertAdjacentHTML('beforeend', botMsgHTML);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }, 1200);
+                    </div>
+                `;
             }
+            chatBox.insertAdjacentHTML('beforeend', msgHTML);
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
+        // Envia os dados coletados no chat para o Supabase
+        async function enviarMensagem() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            input.value = ''; // Limpa campo imediatamente para dar fluidez
+
+            const { error } = await _supabase
+                .from('chat_messages')
+                .insert([{ message: message, is_admin: false, session_id: sessionId }]);
+
+            if (error) console.error("Falha ao salvar objeto:", error);
+        }
+
+        // ASSINATURA REAL-TIME: Escuta inserções no banco em tempo real
+        _supabase
+            .channel('public:chat_messages')
+            .on('postgres_changes', { event: 'INSERT', filter: `session_id=eq.${sessionId}`, schema: 'public', table: 'chat_messages' }, payload => {
+                renderizarMensagem(payload.new.message, payload.new.is_admin);
+            })
+            .subscribe();
+
+        // Enviar pressionando a tecla Enter
         document.getElementById('chat-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                enviarMensagem();
-            }
+            if (e.key === 'Enter') enviarMensagem();
         });
     </script>
 </body>
