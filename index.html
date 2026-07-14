@@ -253,7 +253,7 @@
             <div class="bento-card rounded-2xl p-6 md:p-10 max-w-5xl mx-auto border-zinc-800 bg-black/80 shadow-2xl relative">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-800 pb-6 mb-8 gap-4">
                     <div>
-                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-mono block">Status Atualizado</span>
+                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-mono block">Status Updated</span>
                         <h3 class="text-xl font-bold text-white font-display flex items-center gap-2">
                             Porsche 911 Carrera S <span class="text-xs font-sans font-medium text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">2024</span>
                         </h3>
@@ -381,15 +381,16 @@
 
     <!-- LÓGICA DE TELEMETRIA E CONEXÃO DO CHAT -->
     <script>
-        // ==========================================
-        // CONFIGURAÇÃO DO SEU BANCO EM TEMPO REAL:
-        // ==========================================
-        const SUPABASE_URL = 'https://vadvziujydsqkchotnti.supabase.co/rest/v1/'; // Cole aqui a URL do seu Supabase
-        const SUPABASE_ANON_KEY = 'sb_publishable_cwTtkJHajrNlqxSZWp8O_A_Lvn0no-B'; // Cole aqui a chave Anon Public
+        // ========================================================
+        // CREDENCIAIS DO SUPABASE CONFIGURADAS POR VOCÊ:
+        // ========================================================
+        const SUPABASE_URL = 'https://vadvziujydsqkchotnti.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_cwTtkJHajrNlqxSZWp8O_A_Lvn0no-B';
 
+        // Inicializa o cliente Supabase
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Gera ou captura o identificador único para isolar as conversas dos clientes
+        // Gera ou captura o identificador único (evita que um usuário veja a conversa do outro)
         let sessionId = localStorage.getItem('automind_chat_session');
         if (!sessionId) {
             sessionId = 'user_' + Math.random().toString(36).substring(2, 11);
@@ -408,20 +409,27 @@
             }
         }
 
-        // Faz o carregamento inicial do histórico do banco PostgreSQL
+        // Faz o carregamento inicial do histórico do banco de dados (Tabela: mensagens)
         async function carregarMensagens() {
             const { data, error } = await _supabase
-                .from('chat_messages')
+                .from('mensagens')
                 .select('*')
-                .eq('session_id', sessionId)
                 .order('created_at', { ascending: true });
 
-            if (error) return console.error("Erro ao puxar dados:", error);
+            if (error) return console.error("Erro ao carregar histórico:", error);
 
             const chatBox = document.getElementById('chat-box');
             chatBox.innerHTML = ''; // Reseta tela
 
-            data.forEach(msg => renderizarMensagem(msg.message, msg.is_admin));
+            // Se for o primeiro acesso e não houver histórico, coloca mensagem de boas-vindas
+            if (data.length === 0) {
+                renderizarMensagem("Olá, jogador! Sou o assistente inteligente da AutoMind. Como posso ajudar hoje?", true);
+            } else {
+                data.forEach(msg => {
+                    const isAdmin = msg.autor !== 'usuario';
+                    renderizarMensagem(msg.conteudo, isAdmin);
+                });
+            }
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
@@ -431,20 +439,24 @@
             let msgHTML = '';
 
             if (isAdmin) {
-                // Bolha do administrador (Você respondendo do painel)
+                // Bolha de resposta do Administrador / IA
                 msgHTML = `
                     <div class="flex items-end gap-3">
-                        <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0"><i class="ph-fill ph-headset text-sm"></i></div>
+                        <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0">
+                            <i class="ph-fill ph-headset text-sm"></i>
+                        </div>
                         <div class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
                             <p class="text-xs text-zinc-300">${texto}</p>
                         </div>
                     </div>
                 `;
             } else {
-                // Bolha do usuário logado no site
+                // Bolha enviada pelo Usuário (Você)
                 msgHTML = `
                     <div class="flex items-end gap-3 flex-row-reverse">
-                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0"><i class="ph-fill ph-user text-sm"></i></div>
+                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
+                            <i class="ph-fill ph-user text-sm"></i>
+                        </div>
                         <div class="bg-primary p-3 rounded-tl-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
                             <p class="text-xs text-white">${texto}</p>
                         </div>
@@ -464,24 +476,30 @@
 
             input.value = ''; // Limpa campo imediatamente para dar fluidez
 
+            // Salva na tabela "mensagens" com autor: "usuario"
             const { error } = await _supabase
-                .from('chat_messages')
-                .insert([{ message: message, is_admin: false, session_id: sessionId }]);
+                .from('mensagens')
+                .insert([{ autor: 'usuario', conteudo: message }]);
 
-            if (error) console.error("Falha ao salvar objeto:", error);
+            if (error) {
+                console.error("Falha ao salvar objeto no Supabase:", error);
+            }
         }
 
-        // ASSINATURA REAL-TIME: Escuta inserções no banco em tempo real
+        // ASSINATURA REAL-TIME: Atualiza o chat automaticamente ao inserir novas linhas no banco
         _supabase
-            .channel('public:chat_messages')
-            .on('postgres_changes', { event: 'INSERT', filter: `session_id=eq.${sessionId}`, schema: 'public', table: 'chat_messages' }, payload => {
-                renderizarMensagem(payload.new.message, payload.new.is_admin);
+            .channel('public:mensagens')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensagens' }, payload => {
+                const isAdmin = payload.new.autor !== 'usuario';
+                renderizarMensagem(payload.new.conteudo, isAdmin);
             })
             .subscribe();
 
-        // Enviar pressionando a tecla Enter
+        // Envia mensagem ao pressionar Enter
         document.getElementById('chat-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') enviarMensagem();
+            if (e.key === 'Enter') {
+                enviarMensagem();
+            }
         });
     </script>
 </body>
