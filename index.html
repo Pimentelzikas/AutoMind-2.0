@@ -367,12 +367,12 @@
 
     <script>
         // ========================================================
-        // CREDENCIAIS DO SUPABASE (Configuradas sem barra no final!)
+        // CREDENCIAIS ATUALIZADAS DO SEU PROJETO SUPABASE
         // ========================================================
-        const SUPABASE_URL = 'https://vadvziujydsqkchotnti.supabase.co'; 
-        const SUPABASE_ANON_KEY = 'sb_publishable_cwTtkJHajrNlqxSZWp8O_A_Lvn0no-B';
+        const SUPABASE_URL = 'https://thropxlhbrukakrrdnqw.supabase.co'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRocm9weGxoYnJ1a2FrcnJkbnF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5OTc3MjksImV4cCI6MjA5OTU3MzcyOX0.vHViO7pjDB9uF87x1jRl8zK8gwxg-ioRVWNt7rjlHTk';
 
-        // Inicializa o cliente Supabase utilizando estritamente a URL limpa
+        // Inicializa o cliente Supabase utilizando a URL atualizada
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Gera ou captura o identificador único da sessão do usuário
@@ -396,6 +396,7 @@
 
         // Faz o carregamento do histórico filtrando pela sessão atual
         async function carregarMensagens() {
+            console.log("Tentando carregar mensagens para a sessão:", sessionId);
             const { data, error } = await _supabase
                 .from('mensagens')
                 .select('*')
@@ -403,10 +404,12 @@
                 .order('created_at', { ascending: true });
 
             if (error) {
-                console.error("Erro ao carregar histórico:", error);
+                console.error("Erro crítico ao buscar mensagens do Supabase:", error.message, error.details);
+                alert("Erro ao conectar ao banco de dados: " + error.message);
                 return;
             }
 
+            console.log("Mensagens carregadas com sucesso:", data);
             const chatBox = document.getElementById('chat-box');
             chatBox.innerHTML = ''; 
 
@@ -473,6 +476,8 @@
             // 2. Renderiza a mensagem do usuário instantaneamente na tela local
             renderizarMensagem(message, false);
 
+            console.log("Enviando mensagem para o banco:", message);
+
             // 3. Envia o dado para salvar no banco de dados
             const { error } = await _supabase
                 .from('mensagens')
@@ -485,7 +490,10 @@
                 ]);
 
             if (error) {
-                console.error("Falha ao salvar objeto no Supabase:", error);
+                console.error("Falha ao salvar objeto no Supabase:", error.message, error.details);
+                alert("Erro ao enviar mensagem para o banco de dados. Verifique o console (F12) para detalhes.");
+            } else {
+                console.log("Mensagem inserida no banco com sucesso!");
             }
         }
 
@@ -500,13 +508,16 @@
                     table: 'mensagens'
                 }, 
                 payload => {
+                    console.log("Nova mudança detectada via Realtime:", payload);
                     // Só renderiza aqui se a mensagem vier de fora (ex: resposta do admin/IA)
                     if (payload.new.session_id === sessionId && payload.new.autor !== 'usuario') {
                         renderizarMensagem(payload.new.conteudo, true);
                     }
                 }
             )
-            .subscribe();
+            .subscribe((status) => {
+                console.log("Status da conexão Realtime:", status);
+            });
 
         // Envia mensagem ao pressionar Enter
         document.getElementById('chat-input').addEventListener('keypress', function (e) {
