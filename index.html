@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoMind | Inteligência Artificial Automotiva</title>
     
-    <!-- Google Fonts Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Ícones Phosphor -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,7 +30,6 @@
         }
     </script>
 
-    <!-- Biblioteca Oficial do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -93,7 +89,6 @@
 </head>
 <body class="antialiased selection:bg-primary/30 selection:text-white">
 
-    <!-- NAV BAR -->
     <header class="fixed w-full top-0 z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3 group">
@@ -117,7 +112,6 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
     <section id="inicio" class="relative pt-44 pb-24 px-6 min-h-screen flex items-center">
         <div class="blur-blob-1 top-20 right-10"></div>
         <div class="blur-blob-2 bottom-10 left-10"></div>
@@ -168,7 +162,6 @@
         </div>
     </section>
 
-    <!-- BENTO GRID (DESAFIOS) -->
     <section id="problema" class="py-32 px-6 relative bg-black/40 border-y border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="max-w-3xl mb-20">
@@ -208,7 +201,6 @@
         </div>
     </section>
 
-    <!-- RECURSOS TÉCNICOS -->
     <section id="solucoes" class="py-32 px-6 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-24">
@@ -241,7 +233,6 @@
         </div>
     </section>
 
-    <!-- CENTRAL DE TELEMETRIA -->
     <section id="dashboard" class="py-32 px-6 relative bg-zinc-950/40 border-t border-zinc-900">
         <div class="blur-blob-1 bottom-10 right-20"></div>
         <div class="max-w-7xl mx-auto">
@@ -289,7 +280,6 @@
         </div>
     </section>
 
-    <!-- PLANOS DE LICENCIAMENTO -->
     <section id="planos" class="py-32 px-6 relative border-t border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-24">
@@ -333,7 +323,6 @@
         </div>
     </section>
 
-    <!-- FORMULÁRIO GOOGLE -->
     <section id="formulario" class="py-32 px-6 relative bg-black/60 border-t border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-16">
@@ -345,7 +334,6 @@
         </div>
     </section>
 
-    <!-- MODAL DO CONSULTOR (REAL-TIME VIA SUPABASE) -->
     <div id="consultor-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden">
         <div class="bento-card rounded-2xl p-6 max-w-2xl w-full h-[550px] flex flex-col bg-black/95 relative border border-zinc-800 shadow-[0_0_50px_rgba(0,102,255,0.15)]">
             <div class="flex justify-between items-center border-b border-zinc-800 pb-4 mb-4">
@@ -362,8 +350,7 @@
             </div>
 
             <div id="chat-box" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1">
-                <!-- As mensagens entram aqui dinamicamente -->
-            </div>
+                </div>
             
             <div class="flex gap-3 border-t border-zinc-800 pt-4">
                 <input type="text" id="chat-input" placeholder="Digite sua dúvida ou mensagem..." class="flex-1 bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-primary/50">
@@ -372,14 +359,12 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="border-t border-zinc-900 bg-[#020202] py-16 px-6">
         <div class="max-w-7xl mx-auto text-center text-[10px] text-zinc-600 font-mono">
             &copy; 2026 AutoMind Core Ecosystem. Todos os direitos reservados.
         </div>
     </footer>
 
-    <!-- LÓGICA DE TELEMETRIA E CONEXÃO DO CHAT -->
     <script>
         // ========================================================
         // CREDENCIAIS DO SUPABASE (Configuradas sem barra no final!)
@@ -439,6 +424,13 @@
         // Estrutura gráfica das bolhas de resposta na tela
         function renderizarMensagem(texto, isAdmin) {
             const chatBox = document.getElementById('chat-box');
+            
+            // Evita duplicar mensagens que já estejam renderizadas na tela
+            const mensagensExistentes = Array.from(chatBox.querySelectorAll('p')).map(p => p.innerText);
+            if (mensagensExistentes.includes(texto)) {
+                return; 
+            }
+
             let msgHTML = '';
 
             if (isAdmin) {
@@ -468,15 +460,20 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Envia os dados para a tabela 'mensagens' (usando as colunas 'autor', 'conteudo' e 'session_id')
+        // Envia os dados para a tabela 'mensagens'
         async function enviarMensagem() {
             const input = document.getElementById('chat-input');
             const message = input.value.trim();
 
             if (!message) return;
 
+            // 1. Limpa o input imediatamente
             input.value = ''; 
 
+            // 2. Renderiza a mensagem do usuário instantaneamente na tela local
+            renderizarMensagem(message, false);
+
+            // 3. Envia o dado para salvar no banco de dados
             const { error } = await _supabase
                 .from('mensagens')
                 .insert([
@@ -492,7 +489,7 @@
             }
         }
 
-        // ASSINATURA REAL-TIME: Escuta inserções em tempo real na tabela 'mensagens'
+        // ASSINATURA REAL-TIME: Escuta mensagens inseridas por administradores ou respostas da IA
         _supabase
             .channel('public:mensagens')
             .on(
@@ -503,9 +500,9 @@
                     table: 'mensagens'
                 }, 
                 payload => {
-                    if (payload.new.session_id === sessionId) {
-                        const isAdmin = payload.new.autor !== 'usuario';
-                        renderizarMensagem(payload.new.conteudo, isAdmin);
+                    // Só renderiza aqui se a mensagem vier de fora (ex: resposta do admin/IA)
+                    if (payload.new.session_id === sessionId && payload.new.autor !== 'usuario') {
+                        renderizarMensagem(payload.new.conteudo, true);
                     }
                 }
             )
