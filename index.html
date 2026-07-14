@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoMind | Inteligência Artificial Automotiva</title>
     
+    <!-- Google Fonts Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Ícones Phosphor -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,6 +33,7 @@
         }
     </script>
 
+    <!-- Biblioteca Oficial do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -89,6 +93,7 @@
 </head>
 <body class="antialiased selection:bg-primary/30 selection:text-white">
 
+    <!-- NAV BAR -->
     <header class="fixed w-full top-0 z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3 group">
@@ -112,6 +117,7 @@
         </div>
     </header>
 
+    <!-- HERO SECTION -->
     <section id="inicio" class="relative pt-44 pb-24 px-6 min-h-screen flex items-center">
         <div class="blur-blob-1 top-20 right-10"></div>
         <div class="blur-blob-2 bottom-10 left-10"></div>
@@ -162,6 +168,7 @@
         </div>
     </section>
 
+    <!-- BENTO GRID (DESAFIOS) -->
     <section id="problema" class="py-32 px-6 relative bg-black/40 border-y border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="max-w-3xl mb-20">
@@ -201,6 +208,7 @@
         </div>
     </section>
 
+    <!-- RECURSOS TÉCNICOS -->
     <section id="solucoes" class="py-32 px-6 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-24">
@@ -233,6 +241,7 @@
         </div>
     </section>
 
+    <!-- CENTRAL DE TELEMETRIA -->
     <section id="dashboard" class="py-32 px-6 relative bg-zinc-950/40 border-t border-zinc-900">
         <div class="blur-blob-1 bottom-10 right-20"></div>
         <div class="max-w-7xl mx-auto">
@@ -280,6 +289,7 @@
         </div>
     </section>
 
+    <!-- PLANOS DE LICENCIAMENTO -->
     <section id="planos" class="py-32 px-6 relative border-t border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-24">
@@ -323,6 +333,7 @@
         </div>
     </section>
 
+    <!-- FORMULÁRIO GOOGLE -->
     <section id="formulario" class="py-32 px-6 relative bg-black/60 border-t border-zinc-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-16">
@@ -334,6 +345,7 @@
         </div>
     </section>
 
+    <!-- MODAL DO CONSULTOR (REAL-TIME VIA SUPABASE) -->
     <div id="consultor-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden">
         <div class="bento-card rounded-2xl p-6 max-w-2xl w-full h-[550px] flex flex-col bg-black/95 relative border border-zinc-800 shadow-[0_0_50px_rgba(0,102,255,0.15)]">
             <div class="flex justify-between items-center border-b border-zinc-800 pb-4 mb-4">
@@ -350,7 +362,8 @@
             </div>
 
             <div id="chat-box" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1">
-                </div>
+                <!-- As mensagens entram aqui dinamicamente -->
+            </div>
             
             <div class="flex gap-3 border-t border-zinc-800 pt-4">
                 <input type="text" id="chat-input" placeholder="Digite sua dúvida ou mensagem..." class="flex-1 bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-primary/50">
@@ -359,23 +372,25 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer class="border-t border-zinc-900 bg-[#020202] py-16 px-6">
         <div class="max-w-7xl mx-auto text-center text-[10px] text-zinc-600 font-mono">
             &copy; 2026 AutoMind Core Ecosystem. Todos os direitos reservados.
         </div>
     </footer>
 
+    <!-- LÓGICA DE TELEMETRIA E CONEXÃO DO CHAT -->
     <script>
         // ========================================================
-        // CREDENCIAIS DO SUPABASE CONFIGURADAS POR VOCÊ:
+        // CREDENCIAIS DO SUPABASE (Configuradas sem barra no final!)
         // ========================================================
         const SUPABASE_URL = 'https://vadvziujydsqkchotnti.supabase.co'; 
         const SUPABASE_ANON_KEY = 'sb_publishable_cwTtkJHajrNlqxSZWp8O_A_Lvn0no-B';
 
-        // Inicializa o cliente Supabase
+        // Inicializa o cliente Supabase utilizando estritamente a URL limpa
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Gera ou captura o identificador único (evita que um usuário veja a conversa do outro)
+        // Gera ou captura o identificador único da sessão do usuário
         let sessionId = localStorage.getItem('automind_chat_session');
         if (!sessionId) {
             sessionId = 'user_' + Math.random().toString(36).substring(2, 11);
@@ -387,27 +402,29 @@
             const modal = document.getElementById('consultor-modal');
             if (show) {
                 modal.classList.remove('hidden');
-                carregarMensagens(); // Puxa histórico filtrado pelo usuário logado
+                carregarMensagens(); 
                 document.getElementById('chat-input').focus();
             } else {
                 modal.classList.add('hidden');
             }
         }
 
-        // Faz o carregamento do histórico do banco filtrando pela sessão atual
+        // Faz o carregamento do histórico filtrando pela sessão atual
         async function carregarMensagens() {
             const { data, error } = await _supabase
                 .from('mensagens')
                 .select('*')
-                .eq('session_id', sessionId) // <-- Corrigido: agora só traz o histórico deste usuário
+                .eq('session_id', sessionId)
                 .order('created_at', { ascending: true });
 
-            if (error) return console.error("Erro ao carregar histórico:", error);
+            if (error) {
+                console.error("Erro ao carregar histórico:", error);
+                return;
+            }
 
             const chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML = ''; // Reseta tela
+            chatBox.innerHTML = ''; 
 
-            // Se for o primeiro acesso e não houver histórico, coloca mensagem de boas-vindas
             if (data.length === 0) {
                 renderizarMensagem("Olá! Sou o assistente inteligente da AutoMind. Como posso ajudar você hoje?", true);
             } else {
@@ -425,7 +442,6 @@
             let msgHTML = '';
 
             if (isAdmin) {
-                // Bolha de resposta do Administrador / IA
                 msgHTML = `
                     <div class="flex items-end gap-3">
                         <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0">
@@ -437,7 +453,6 @@
                     </div>
                 `;
             } else {
-                // Bolha enviada pelo Usuário (Você)
                 msgHTML = `
                     <div class="flex items-end gap-3 flex-row-reverse">
                         <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
@@ -453,26 +468,31 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Envia os dados coletados no chat salvando o identificador da sessão
+        // Envia os dados para a tabela 'mensagens' (usando as colunas 'autor', 'conteudo' e 'session_id')
         async function enviarMensagem() {
             const input = document.getElementById('chat-input');
             const message = input.value.trim();
 
             if (!message) return;
 
-            input.value = ''; // Limpa campo imediatamente para dar fluidez
+            input.value = ''; 
 
-            // Salva na tabela "mensagens" associando com o session_id único
             const { error } = await _supabase
                 .from('mensagens')
-                .insert([{ autor: 'usuario', conteudo: message, session_id: sessionId }]); // <-- Corrigido: Gravando a session_id no banco
+                .insert([
+                    { 
+                        autor: 'usuario', 
+                        conteudo: message, 
+                        session_id: sessionId 
+                    }
+                ]);
 
             if (error) {
                 console.error("Falha ao salvar objeto no Supabase:", error);
             }
         }
 
-        // ASSINATURA REAL-TIME: Atualiza o chat automaticamente ao inserir novas linhas no banco
+        // ASSINATURA REAL-TIME: Escuta inserções em tempo real na tabela 'mensagens'
         _supabase
             .channel('public:mensagens')
             .on(
@@ -483,7 +503,6 @@
                     table: 'mensagens'
                 }, 
                 payload => {
-                    // Só atualiza em tempo real se a mensagem recebida pertencer a esta sessão
                     if (payload.new.session_id === sessionId) {
                         const isAdmin = payload.new.autor !== 'usuario';
                         renderizarMensagem(payload.new.conteudo, isAdmin);
