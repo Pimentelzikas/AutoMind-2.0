@@ -1,530 +1,610 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoMind | Inteligência Artificial Automotiva</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoMind 2.0 | Inteligência Veicular ao Seu Alcance</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { 
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif']
-                    },
-                    colors: {
-                        primary: '#0066FF',
-                        secondary: '#00C853',
-                        cyber: '#00f0ff',
-                        darkBg: '#030303',
-                        cardBg: '#09090b'
-                    }
-                }
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+              accent: '#38bdf8',
+              cyan: '#06b6d4',
+              neon: '#10b981'
             }
+          }
         }
-    </script>
+      }
+    }
+  </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <style>
-        body { 
-            background-color: #030303; 
-            color: #f4f4f5;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 40px 40px;
-            overflow-x: hidden;
-        }
-        .glass-nav {
-            background: rgba(3, 3, 3, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .bento-card {
-            background: linear-gradient(145deg, rgba(15, 15, 18, 0.6) 0%, rgba(9, 9, 11, 0.8) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .bento-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(0, 102, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.08);
-        }
-        .text-neon-gradient {
-            background: linear-gradient(135deg, #ffffff 30%, #0066FF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .text-green-gradient {
-            background: linear-gradient(135deg, #00C853 0%, #00f0ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .blur-blob-1 {
-            position: absolute; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
-            filter: blur(80px); z-index: -1; animation: float 12s infinite alternate;
-        }
-        .blur-blob-2 {
-            position: absolute; width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(0, 200, 83, 0.08) 0%, rgba(0,0,0,0) 70%);
-            filter: blur(80px); z-index: -1; animation: float 8s infinite alternate-reverse;
-        }
-        @keyframes float {
-            0% { transform: translate(0px, 0px) scale(1); }
-            100% { transform: translate(40px, -40px) scale(1.1); }
-        }
-        #chat-box::-webkit-scrollbar { width: 6px; }
-        #chat-box::-webkit-scrollbar-track { background: transparent; }
-        #chat-box::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
-    </style>
+  <style>
+    html { scroll-behavior: smooth; }
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card-glass {
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .pulse-glow {
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+    }
+  </style>
 </head>
-<body class="antialiased selection:bg-primary/30 selection:text-white">
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white">
 
-    <header class="fixed w-full top-0 z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3 group">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-cyber flex items-center justify-center shadow-[0_0_20px_rgba(0,102,255,0.4)]">
-                    <i class="ph-fill ph-cpu text-white text-xl"></i>
-                </div>
-                <span class="text-xl font-bold tracking-tight font-display text-white">Auto<span class="text-primary">Mind</span></span>
-            </div>
-            <nav class="hidden lg:flex gap-6 text-xs uppercase tracking-widest font-semibold text-zinc-400">
-                <a href="#inicio" class="hover:text-white transition-colors duration-300">Início</a>
-                <a href="#problema" class="hover:text-white transition-colors duration-300">Desafios</a>
-                <a href="#solucoes" class="hover:text-white transition-colors duration-300">Recursos</a>
-                <a href="#dashboard" class="hover:text-white transition-colors duration-300">Telemetria</a>
-                <a href="#planos" class="hover:text-white transition-colors duration-300">Planos</a>
-                <a href="#formulario" class="hover:text-white transition-colors duration-300">Formulário</a>
-                <button onclick="toggleChat(true)" class="hover:text-white transition-colors duration-300 uppercase tracking-widest text-left">Consultor</button>
-            </nav>
-            <a href="#planos" class="relative group overflow-hidden bg-white text-black px-6 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-300 hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]">
-                <span class="relative z-10">Testar Agora</span>
-            </a>
+  <!-- ================= HEADER / NAVBAR ================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 group-hover:scale-105 transition">
+          <i class="fa-solid fa-microchip text-white text-xl"></i>
         </div>
-    </header>
-
-    <section id="inicio" class="relative pt-44 pb-24 px-6 min-h-screen flex items-center">
-        <div class="blur-blob-1 top-20 right-10"></div>
-        <div class="blur-blob-2 bottom-10 left-10"></div>
-        
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 items-center w-full">
-            <div class="lg:col-span-7 space-y-8">
-                <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-xs font-semibold text-secondary">
-                    <span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_10px_#00C853] animate-pulse"></span>
-                    Módulo OBD-II de Alta Resolução Ativo
-                </div>
-                <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] font-display text-neon-gradient">
-                    A inteligência artificial que decodifica o seu motor.
-                </h1>
-                <p class="text-base md:text-lg text-zinc-400 max-w-xl leading-relaxed font-light">
-                    Transformamos telemetria automotiva complexa em diagnósticos preventivos claros. Evite quebras, monitore em tempo real e mude sua relação com a mecânica.
-                </p>
-                <div class="flex flex-wrap gap-4 pt-2">
-                    <a href="#dashboard" class="bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-sm transition-all shadow-[0_0_30px_rgba(0,102,255,0.3)] hover:scale-[1.02]">Explorar Painel</a>
-                    <a href="#solucoes" class="bento-card hover:bg-zinc-900/40 text-white px-8 py-4 rounded-xl font-bold text-sm transition border border-zinc-800">Ver Recursos</a>
-                </div>
-            </div>
-            
-            <div class="lg:col-span-5 relative w-full h-[450px] bento-card rounded-2xl overflow-hidden p-8 flex flex-col justify-between border-zinc-800/60 shadow-2xl">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-luminosity"></div>
-                <div class="flex justify-between items-start relative z-10">
-                    <div>
-                        <span class="text-[10px] uppercase font-mono tracking-widest text-zinc-500 block">Dispositivo ID</span>
-                        <span class="text-sm font-bold font-display text-white">AM-982_OBD</span>
-                    </div>
-                    <span class="px-2.5 py-1 text-[10px] font-mono bg-primary/10 border border-primary/20 rounded text-primary font-bold">CONECTADO</span>
-                </div>
-                <div class="space-y-4 relative z-10">
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-6xl font-extrabold font-display tracking-tighter text-white">2.4<span class="text-xl text-zinc-500 font-light">ms</span></span>
-                    </div>
-                    <p class="text-xs font-medium text-zinc-400 flex items-center gap-1.5">
-                        <i class="ph-bold ph-waveform text-cyber text-sm animate-pulse"></i> Latência de transmissão de dados via nuvem
-                    </p>
-                </div>
-                <div class="w-full h-16 flex items-end gap-1 pt-4 border-t border-zinc-800/60 relative z-10">
-                    <div class="w-full bg-primary/20 h-[40%] rounded-sm"></div>
-                    <div class="w-full bg-primary/20 h-[60%] rounded-sm"></div>
-                    <div class="w-full bg-primary/40 h-[55%] rounded-sm"></div>
-                    <div class="w-full bg-primary/30 h-[80%] rounded-sm"></div>
-                    <div class="w-full bg-gradient-to-t from-primary to-cyber h-[95%] rounded-sm shadow-[0_0_15px_rgba(0,102,255,0.4)]"></div>
-                </div>
-            </div>
+        <div>
+          <span class="text-xl font-black tracking-tight text-white">AutoMind <span class="text-sky-400">2.0</span></span>
+          <span class="block text-[10px] uppercase font-bold tracking-widest text-slate-400">Inteligência Veicular</span>
         </div>
-    </section>
+      </a>
 
-    <section id="problema" class="py-32 px-6 relative bg-black/40 border-y border-zinc-900">
-        <div class="max-w-7xl mx-auto">
-            <div class="max-w-3xl mb-20">
-                <span class="text-xs font-bold tracking-widest text-primary uppercase block mb-3 font-display">O Cenário Atual</span>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">O custo de não entender o seu próprio veículo.</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bento-card p-8 rounded-2xl md:col-span-2 flex flex-col justify-between min-h-[260px]">
-                    <div class="w-11 h-11 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center text-red-400 text-xl"><i class="ph ph-shield-warning"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-white font-display">Manutenções Corretivas Abusivas</h3>
-                        <p class="text-zinc-400 text-sm font-light max-w-xl">Descobrir falhas graves apenas quando o carro quebra na rodovia gera guinchos caros e orçamentos superfaturados em oficinas mecânicas sem critério.</p>
-                    </div>
-                </div>
-                <div class="bento-card p-8 rounded-2xl flex flex-col justify-between min-h-[260px]">
-                    <div class="w-11 h-11 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 text-xl"><i class="ph ph-eye-slash"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-white font-display">Opacidade Total</h3>
-                        <p class="text-zinc-400 text-sm font-light">A luz da injeção eletrônica acende no painel e você fica completamente refém, sem saber se é apenas um combustível adulterado ou um dano crítico no motor.</p>
-                    </div>
-                </div>
-                <div class="bento-card p-8 rounded-2xl flex flex-col justify-between min-h-[260px]">
-                    <div class="w-11 h-11 bg-zinc-800 border border-zinc-700 rounded-xl flex items-center justify-center text-zinc-300 text-xl"><i class="ph ph-chart-line-down"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-white font-display">Desvalorização Invisível</h3>
-                        <p class="text-zinc-400 text-sm font-light">Problemas de suspensão e desgaste precoce de cilindros reduzem drasticamente o valor de revenda do automóvel sem que você note no dia a dia.</p>
-                    </div>
-                </div>
-                <div class="bento-card p-8 rounded-2xl md:col-span-2 flex flex-col justify-between min-h-[260px] bg-gradient-to-r from-zinc-900/50 to-primary/5 border-primary/10">
-                    <div class="w-11 h-11 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center text-primary text-xl"><i class="ph-bold ph-sparkle"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-white font-display">A Solução Inteligente</h3>
-                        <p class="text-zinc-300 text-sm font-light max-w-xl">A AutoMind intercepta os códigos brutos de erro (DTC) emitidos pelo veículo através de algoritmos preditivos avançados, alertando o usuário no smartphone antes mesmo do sintoma físico se manifestar.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#inicio" class="hover:text-sky-400 transition">Início</a>
+        <a href="#problema-solucao" class="hover:text-sky-400 transition">Por que escolher?</a>
+        <a href="#funcionalidades" class="hover:text-sky-400 transition">Como Funciona</a>
+        <a href="#mercado" class="hover:text-sky-400 transition">Dados do Mercado</a>
+        <a href="#quem-somos" class="hover:text-sky-400 transition">Quem Somos</a>
+      </nav>
 
-    <section id="solucoes" class="py-32 px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-24">
-                <span class="text-xs font-bold tracking-widest text-secondary uppercase block mb-3 font-display">Tecnologia Embarcada</span>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">Funcionalidades do Ecossistema</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bento-card p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl"><i class="ph ph-gauge"></i></div>
-                        <h3 class="text-xl font-bold text-white font-display">Telemetria Contínua</h3>
-                    </div>
-                    <p class="text-zinc-400 text-xs leading-relaxed font-light">Leitura constante de rotação (RPM), temperatura do fluido de arrefecimento, fluxo de ar e pressão do coletor diretamente da central ECU.</p>
-                </div>
-                <div class="bento-card p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary text-2xl"><i class="ph ph-lightning"></i></div>
-                        <h3 class="text-xl font-bold text-white font-display">Saúde de Bateria</h3>
-                    </div>
-                    <p class="text-zinc-400 text-xs leading-relaxed font-light">Algoritmo dedicado que mede a queda de tensão na partida para prever o fim da vida útil de baterias e alternadores com até 30 dias de antecedência.</p>
-                </div>
-                <div class="bento-card p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 bg-cyber/10 rounded-2xl flex items-center justify-center text-cyber text-2xl"><i class="ph ph-git-branch"></i></div>
-                        <h3 class="text-xl font-bold text-white font-display">Tradução de Erros DTC</h3>
-                    </div>
-                    <p class="text-zinc-400 text-xs leading-relaxed font-light">Conversão instantânea de códigos complexos (como P0300 a P0304) para textos diretos e ações recomendadas práticas ao condutor.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <!-- CTA Nav Button -->
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#contato" class="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-md shadow-sky-500/20 transition transform hover:-translate-y-0.5">
+          Agendar Demonstração
+        </a>
+      </div>
 
-    <section id="dashboard" class="py-32 px-6 relative bg-zinc-950/40 border-t border-zinc-900">
-        <div class="blur-blob-1 bottom-10 right-20"></div>
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <span class="text-xs font-bold tracking-widest text-primary uppercase block mb-3 font-display">Interface SaaS Real</span>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">Central de Comando Automotiva</h2>
-            </div>
-            
-            <div class="bento-card rounded-2xl p-6 md:p-10 max-w-5xl mx-auto border-zinc-800 bg-black/80 shadow-2xl relative">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-800 pb-6 mb-8 gap-4">
-                    <div>
-                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-mono block">Status Updated</span>
-                        <h3 class="text-xl font-bold text-white font-display flex items-center gap-2">
-                            Porsche 911 Carrera S <span class="text-xs font-sans font-medium text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">2024</span>
-                        </h3>
-                    </div>
-                    <div class="flex items-center gap-6">
-                        <div class="text-right">
-                            <span class="text-3xl font-black text-green-gradient font-display">94%</span>
-                            <span class="text-[9px] text-zinc-500 block font-mono tracking-wider">SCORE DO MOTOR</span>
-                        </div>
-                        <div class="w-3 h-3 rounded-full bg-secondary shadow-[0_0_12px_#00C853] animate-pulse"></div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl">
-                        <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Líquido de Arrefecimento</span>
-                        <div class="text-xl font-bold text-white font-display">92°C</div>
-                    </div>
-                    <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl">
-                        <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Voltagem Alternador</span>
-                        <div class="text-xl font-bold text-white font-display">14.2 V</div>
-                    </div>
-                    <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl">
-                        <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Pressão do Óleo</span>
-                        <div class="text-xl font-bold text-white font-display">3.4 Bar</div>
-                    </div>
-                    <div class="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-xl col-span-2 md:col-span-1">
-                        <span class="text-[11px] text-zinc-500 block mb-1 font-medium">Mistura Ar-Combustível</span>
-                        <div class="text-xl font-bold text-white font-display">14.7:1</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="planos" class="py-32 px-6 relative border-t border-zinc-900">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-2xl mx-auto mb-24">
-                <span class="text-xs font-bold tracking-widest text-primary uppercase block mb-3 font-display">Monetização SaaS</span>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">Modelos de Licenciamento</h2>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center">
-                <div class="bento-card p-8 rounded-2xl flex flex-col min-h-[440px] opacity-80">
-                    <h3 class="text-lg font-bold mb-1 text-white font-display">Módulo Standard</h3>
-                    <div class="text-3xl font-bold font-display text-white mb-6">R$ 39,90</div>
-                    <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-400 border-t border-zinc-900 pt-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Monitoramento OBD Básico</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Alertas Básicos de Saúde</li>
-                    </ul>
-                    <button class="w-full py-3 rounded-xl bg-zinc-900 text-xs font-bold border border-zinc-800">Adquirir Solução</button>
-                </div>
-
-                <div class="bento-card p-8 rounded-3xl flex flex-col min-h-[480px] border-primary/40 bg-gradient-to-b from-primary/10 via-cardBg to-cardBg relative shadow-[0_0_40px_rgba(0,102,255,0.15)]">
-                    <div class="absolute top-4 right-4 bg-primary/20 border border-primary/30 text-[9px] font-bold text-white tracking-widest uppercase px-2.5 py-1 rounded-md">Mais Vendido</div>
-                    <h3 class="text-xl font-bold mb-1 text-white font-display">Módulo Premium</h3>
-                    <div class="text-4xl font-bold font-display text-primary mb-6">R$ 59,90</div>
-                    <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-300 border-t border-zinc-800/40 pt-6">
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary"></i> Diagnósticos Preditivos IA</li>
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary"></i> Análise de Bateria Avançada</li>
-                        <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-secondary"></i> Tradutor de Códigos DTC</li>
-                    </ul>
-                    <button class="w-full py-3.5 rounded-xl bg-primary text-white font-bold text-xs shadow-[0_0_20px_rgba(0,102,255,0.4)]">Adquirir Solução</button>
-                </div>
-
-                <div class="bento-card p-8 rounded-2xl flex flex-col min-h-[440px] opacity-80">
-                    <h3 class="text-lg font-bold mb-1 text-white font-display">Módulo Fleet (SaaS)</h3>
-                    <div class="text-3xl font-bold font-display text-white mb-6">Sob Consulta</div>
-                    <ul class="space-y-3.5 mb-8 flex-1 text-xs text-zinc-400 border-t border-zinc-900 pt-6">
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Painel Multi-Veículos</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-check text-primary"></i> Integração via API Rest</li>
-                    </ul>
-                    <button onclick="toggleChat(true)" class="w-full py-3 rounded-xl bg-zinc-900 text-xs font-bold border border-zinc-800">Falar com Consultor</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="formulario" class="py-32 px-6 relative bg-black/60 border-t border-zinc-900">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight font-display text-white">Deixe seu Feedback</h2>
-            </div>
-            <div class="bento-card p-2 rounded-3xl max-w-4xl mx-auto h-[600px] bg-white/5">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAFAV2zMmxnVkldKS04HmbZf400_BBlySd64neoy0b1Onzaw/viewform?embedded=true" width="100%" height="100%" frameborder="0" class="rounded-2xl">Carregando…</iframe>
-            </div>
-        </div>
-    </section>
-
-    <div id="consultor-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden">
-        <div class="bento-card rounded-2xl p-6 max-w-2xl w-full h-[550px] flex flex-col bg-black/95 relative border border-zinc-800 shadow-[0_0_50px_rgba(0,102,255,0.15)]">
-            <div class="flex justify-between items-center border-b border-zinc-800 pb-4 mb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                        <i class="ph-fill ph-headset text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-bold text-white font-display">Consultor Técnico AutoMind</h3>
-                        <p class="text-[10px] text-secondary font-mono flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Online</p>
-                    </div>
-                </div>
-                <button onclick="toggleChat(false)" class="text-zinc-400 hover:text-white"><i class="ph ph-x text-2xl"></i></button>
-            </div>
-
-            <div id="chat-box" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1">
-                </div>
-            
-            <div class="flex gap-3 border-t border-zinc-800 pt-4">
-                <input type="text" id="chat-input" placeholder="Digite sua dúvida ou mensagem..." class="flex-1 bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-primary/50">
-                <button onclick="enviarMensagem()" class="bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-xl font-bold"><i class="ph-bold ph-paper-plane-right"></i></button>
-            </div>
-        </div>
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white text-2xl focus:outline-none">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
 
-    <footer class="border-t border-zinc-900 bg-[#020202] py-16 px-6">
-        <div class="max-w-7xl mx-auto text-center text-[10px] text-zinc-600 font-mono">
-            &copy; 2026 AutoMind Core Ecosystem. Todos os direitos reservados.
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 flex flex-col gap-4 text-slate-300">
+      <a href="#inicio" class="mobile-link py-2 hover:text-sky-400">Início</a>
+      <a href="#problema-solucao" class="mobile-link py-2 hover:text-sky-400">Por que escolher?</a>
+      <a href="#funcionalidades" class="mobile-link py-2 hover:text-sky-400">Como Funciona</a>
+      <a href="#mercado" class="mobile-link py-2 hover:text-sky-400">Dados do Mercado</a>
+      <a href="#quem-somos" class="mobile-link py-2 hover:text-sky-400">Quem Somos</a>
+      <a href="#contato" class="mobile-link py-2 text-center rounded-xl bg-sky-500 text-white font-bold">Agendar Demonstração</a>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section id="inicio" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-grid-pattern relative overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Column: Copywriting -->
+        <div class="lg:col-span-7 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-semibold uppercase tracking-wider mb-6">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+            Lançamento AutoMind Link OBD-II
+          </div>
+          
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+            Inteligência veicular ao seu alcance, <span class="text-gradient">prevenindo falhas</span> e protegendo o seu bolso.
+          </h1>
+
+          <p class="mt-6 text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            Chega de surpresas e orçamentos mecânicos abusivos. O <strong class="text-sky-400 font-semibold">AutoMind Link</strong> conecta a telemetria do seu motor em tempo real ao seu celular com alertas preditivos antes que o problema aconteça.
+          </p>
+
+          <!-- CTAs & Price Badge -->
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a href="#preco" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-lg shadow-sky-500/25 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+              <span>Garantir o Meu por R$ 350</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+            <a href="#contato" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-semibold text-slate-200 bg-slate-900 border border-slate-700 hover:bg-slate-800 transition flex items-center justify-center gap-2">
+              <i class="fa-regular fa-calendar-check text-sky-400"></i>
+              Demonstração Gratuita
+            </a>
+          </div>
+
+          <!-- Quick Benefits List -->
+          <div class="mt-10 pt-8 border-t border-slate-800 grid grid-cols-3 gap-4 text-center lg:text-left">
+            <div>
+              <p class="text-2xl font-extrabold text-white">100%</p>
+              <p class="text-xs text-slate-400">Instalação Plug & Play</p>
+            </div>
+            <div>
+              <p class="text-2xl font-extrabold text-white">4G / BT</p>
+              <p class="text-xs text-slate-400">Conexão em Tempo Real</p>
+            </div>
+            <div>
+              <p class="text-2xl font-extrabold text-emerald-400">R$ 350</p>
+              <p class="text-xs text-slate-400">Preço Único Acessível</p>
+            </div>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        // ========================================================
-        // CREDENCIAIS ATUALIZADAS DO SEU PROJETO SUPABASE
-        // ========================================================
-        const SUPABASE_URL = 'https://thropxlhbrukakrrdnqw.supabase.co'; 
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRocm9weGxoYnJ1a2FrcnJkbnF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5OTc3MjksImV4cCI6MjA5OTU3MzcyOX0.vHViO7pjDB9uF87x1jRl8zK8gwxg-ioRVWNt7rjlHTk';
+        <!-- Right Column: Interactive Mockup / Telemetry Dashboard Preview -->
+        <div class="lg:col-span-5">
+          <div class="card-glass rounded-3xl p-6 pulse-glow relative overflow-hidden">
+            <!-- Header App Simulation -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-700/60 mb-6">
+              <div class="flex items-center gap-3">
+                <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span class="text-xs font-mono text-slate-300">AutoMind Link: <strong class="text-emerald-400">Conectado (4G)</strong></span>
+              </div>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-slate-800 text-sky-400 border border-slate-700">OBD-II Online</span>
+            </div>
 
-        // Inicializa o cliente Supabase utilizando a URL atualizada
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            <!-- Telemetry Metrics Grid -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800">
+                <div class="flex justify-between items-center text-slate-400 text-xs mb-1">
+                  <span>Temp. do Motor</span>
+                  <i class="fa-solid fa-temperature-half text-sky-400"></i>
+                </div>
+                <p class="text-2xl font-black text-white">88 <span class="text-sm font-normal text-slate-400">°C</span></p>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                  <div class="bg-emerald-500 h-full w-[65%]"></div>
+                </div>
+              </div>
 
-        // Gera ou captura o identificador único da sessão do usuário
-        let sessionId = localStorage.getItem('automind_chat_session');
-        if (!sessionId) {
-            sessionId = 'user_' + Math.random().toString(36).substring(2, 11);
-            localStorage.setItem('automind_chat_session', sessionId);
-        }
+              <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800">
+                <div class="flex justify-between items-center text-slate-400 text-xs mb-1">
+                  <span>Pressão do Óleo</span>
+                  <i class="fa-solid fa-oil-can text-amber-400"></i>
+                </div>
+                <p class="text-2xl font-black text-white">3.2 <span class="text-sm font-normal text-slate-400">BAR</span></p>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                  <div class="bg-sky-400 h-full w-[80%]"></div>
+                </div>
+              </div>
+            </div>
 
-        // Abre e fecha a janela flutuante do chat
-        function toggleChat(show) {
-            const modal = document.getElementById('consultor-modal');
-            if (show) {
-                modal.classList.remove('hidden');
-                carregarMensagens(); 
-                document.getElementById('chat-input').focus();
-            } else {
-                modal.classList.add('hidden');
-            }
-        }
+            <!-- Predictive Alert Simulation Card -->
+            <div class="bg-gradient-to-r from-sky-950/80 to-slate-900/90 border border-sky-500/30 rounded-2xl p-4 flex items-start gap-3">
+              <div class="p-2 bg-sky-500/20 text-sky-400 rounded-xl mt-0.5">
+                <i class="fa-solid fa-shield-halved text-lg"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-sky-300">Alerta Preditivo de Manutenção</h4>
+                <p class="text-xs text-slate-300 mt-1">Nenhum desgaste anômalo detectado. Seu motor está operando com 100% de eficiência.</p>
+              </div>
+            </div>
 
-        // Faz o carregamento do histórico filtrando pela sessão atual
-        async function carregarMensagens() {
-            console.log("Tentando carregar mensagens para a sessão:", sessionId);
-            const { data, error } = await _supabase
-                .from('mensagens')
-                .select('*')
-                .eq('session_id', sessionId)
-                .order('created_at', { ascending: true });
+            <!-- Hardware Tag -->
+            <div class="mt-6 text-center pt-4 border-t border-slate-800">
+              <p class="text-[11px] text-slate-400 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-car text-sky-400"></i> Compatível com veículos de passeio com entrada OBD-II
+              </p>
+            </div>
+          </div>
+        </div>
 
-            if (error) {
-                console.error("Erro crítico ao buscar mensagens do Supabase:", error.message, error.details);
-                alert("Erro ao conectar ao banco de dados: " + error.message);
-                return;
-            }
+      </div>
+    </div>
+  </section>
 
-            console.log("Mensagens carregadas com sucesso:", data);
-            const chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML = ''; 
+  <!-- ================= O PROBLEMA VS A SOLUÇÃO ================= -->
+  <section id="problema-solucao" class="py-20 bg-slate-900/50 relative border-t border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">A Dor do Motorista Leigo</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Você já passou por alguma dessas situações?</p>
+      </div>
 
-            if (data.length === 0) {
-                renderizarMensagem("Olá! Sou o assistente inteligente da AutoMind. Como posso ajudar você hoje?", true);
-            } else {
-                data.forEach(msg => {
-                    const isAdmin = msg.autor !== 'usuario';
-                    renderizarMensagem(msg.conteudo, isAdmin);
-                });
-            }
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+      <!-- Problem Cards Grid -->
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <!-- Card 1 -->
+        <div class="bg-slate-900 rounded-2xl p-6 border border-rose-500/20 hover:border-rose-500/40 transition">
+          <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold mb-4">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Orçamentos Sem Transparência</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Ir à oficina sem saber o que o carro realmente precisa e se deparar com preços abusivos ou trocas desnecessárias de peças.
+          </p>
+        </div>
 
-        // Estrutura gráfica das bolhas de resposta na tela
-        function renderizarMensagem(texto, isAdmin) {
-            const chatBox = document.getElementById('chat-box');
-            
-            // Evita duplicar mensagens que já estejam renderizadas na tela
-            const mensagensExistentes = Array.from(chatBox.querySelectorAll('p')).map(p => p.innerText);
-            if (mensagensExistentes.includes(texto)) {
-                return; 
-            }
+        <!-- Card 2 -->
+        <div class="bg-slate-900 rounded-2xl p-6 border border-amber-500/20 hover:border-amber-500/40 transition">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold mb-4">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">O Medo da Luz do Painel</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            O susto imediato e o receio de custos astronômicos quando a luz amarela de injeção eletrônica acende sem aviso no meio da viagem.
+          </p>
+        </div>
 
-            let msgHTML = '';
+        <!-- Card 3 -->
+        <div class="bg-slate-900 rounded-2xl p-6 border border-slate-700/50 hover:border-slate-600 transition">
+          <div class="w-12 h-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center text-xl font-bold mb-4">
+            <i class="fa-solid fa-circle-question"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Termos Técnicos Complexos</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Códigos numéricos indecifráveis que os scanners tradicionais mostram e que não explicam na prática o que você deve fazer.
+          </p>
+        </div>
+      </div>
 
-            if (isAdmin) {
-                msgHTML = `
-                    <div class="flex items-end gap-3">
-                        <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0">
-                            <i class="ph-fill ph-headset text-sm"></i>
-                        </div>
-                        <div class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
-                            <p class="text-xs text-zinc-300">${texto}</p>
-                        </div>
-                    </div>
-                `;
-            } else {
-                msgHTML = `
-                    <div class="flex items-end gap-3 flex-row-reverse">
-                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 flex-shrink-0">
-                            <i class="ph-fill ph-user text-sm"></i>
-                        </div>
-                        <div class="bg-primary p-3 rounded-tl-xl rounded-br-xl rounded-bl-xl max-w-[85%]">
-                            <p class="text-xs text-white">${texto}</p>
-                        </div>
-                    </div>
-                `;
-            }
-            chatBox.insertAdjacentHTML('beforeend', msgHTML);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+      <!-- Solution Banner -->
+      <div class="bg-gradient-to-r from-sky-900/40 via-indigo-900/40 to-slate-900 rounded-3xl p-8 lg:p-12 border border-sky-500/30 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 text-xs font-bold uppercase text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full mb-4">
+            <i class="fa-solid fa-check"></i> A Solução Definitiva
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white">AutoMind Link: Diagnóstico simples na palma da sua mão</h3>
+          <p class="text-slate-300 mt-3 text-sm sm:text-base leading-relaxed">
+            Em vez de apenas ler erros quando o estrago já aconteceu, nossa tecnologia preditiva antecipa falhas e explica em linguagem clara o estado real do seu veículo.
+          </p>
+        </div>
+        <a href="#funcionalidades" class="px-6 py-3.5 rounded-xl bg-sky-500 text-white font-bold hover:bg-sky-400 transition whitespace-nowrap">
+          Ver Como Funciona
+        </a>
+      </div>
 
-        // Envia os dados para a tabela 'mensagens'
-        async function enviarMensagem() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
+    </div>
+  </section>
 
-            if (!message) return;
+  <!-- ================= FUNCIONALIDADES / COMO FUNCIONA ================= -->
+  <section id="funcionalidades" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">Simplicidade & Tecnologia</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Como o AutoMind Link protege seu carro?</p>
+      </div>
 
-            // 1. Limpa o input imediatamente
-            input.value = ''; 
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Passo 1 -->
+        <div class="bg-slate-900/60 rounded-2xl p-8 border border-slate-800 text-center relative group hover:border-sky-500/50 transition">
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition">
+            <i class="fa-solid fa-plug"></i>
+          </div>
+          <span class="text-xs font-extrabold text-sky-400 uppercase tracking-wider">Passo 01</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-3">Conexão Descomplicada</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Você mesmo conecta o pequeno scanner AutoMind Link na entrada OBD-II do seu veículo (presente em quase todos os carros fabricados a partir de 2010).
+          </p>
+        </div>
 
-            // 2. Renderiza a mensagem do usuário instantaneamente na tela local
-            renderizarMensagem(message, false);
+        <!-- Passo 2 -->
+        <div class="bg-slate-900/60 rounded-2xl p-8 border border-slate-800 text-center relative group hover:border-sky-500/50 transition">
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition">
+            <i class="fa-solid fa-wifi"></i>
+          </div>
+          <span class="text-xs font-extrabold text-sky-400 uppercase tracking-wider">Passo 02</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-3">Telemetria 4G e Bluetooth</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            O dispositivo transmite os dados vitais do motor (temperatura, pressão do óleo, rotação RPM e sistema elétrico) diretamente para o aplicativo no celular.
+          </p>
+        </div>
 
-            console.log("Enviando mensagem para o banco:", message);
+        <!-- Passo 3 -->
+        <div class="bg-slate-900/60 rounded-2xl p-8 border border-slate-800 text-center relative group hover:border-sky-500/50 transition">
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <span class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">Passo 03</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-3">Alertas Preditivos Inteligentes</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Nosso software com inteligência preditiva avisa no app antes que a peça quebre. Você previne danos graves e economiza de verdade no mecânico.
+          </p>
+        </div>
 
-            // 3. Envia o dado para salvar no banco de dados
-            const { error } = await _supabase
-                .from('mensagens')
-                .insert([
-                    { 
-                        autor: 'usuario', 
-                        conteudo: message, 
-                        session_id: sessionId 
-                    }
-                ]);
+      </div>
 
-            if (error) {
-                console.error("Falha ao salvar objeto no Supabase:", error.message, error.details);
-                alert("Erro ao enviar mensagem para o banco de dados. Verifique o console (F12) para detalhes.");
-            } else {
-                console.log("Mensagem inserida no banco com sucesso!");
-            }
-        }
+    </div>
+  </section>
 
-        // ASSINATURA REAL-TIME: Escuta mensagens inseridas por administradores ou respostas da IA
-        _supabase
-            .channel('public:mensagens')
-            .on(
-                'postgres_changes', 
-                { 
-                    event: 'INSERT', 
-                    schema: 'public', 
-                    table: 'mensagens'
-                }, 
-                payload => {
-                    console.log("Nova mudança detectada via Realtime:", payload);
-                    // Só renderiza aqui se a mensagem vier de fora (ex: resposta do admin/IA)
-                    if (payload.new.session_id === sessionId && payload.new.autor !== 'usuario') {
-                        renderizarMensagem(payload.new.conteudo, true);
-                    }
-                }
-            )
-            .subscribe((status) => {
-                console.log("Status da conexão Realtime:", status);
-            });
+  <!-- ================= PROVA SOCIAL / DADOS DE MERCADO ================= -->
+  <section id="mercado" class="py-20 bg-slate-900/40 border-t border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">Pesquisa de Mercado & Validação</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Comprovado pelas dores reais dos motoristas</p>
+        <p class="mt-3 text-slate-400 text-sm">Dados de pesquisa de validação realizados com condutores de veículos de passeio.</p>
+      </div>
 
-        // Envia mensagem ao pressionar Enter
-        document.getElementById('chat-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                enviarMensagem();
-            }
-        });
-    </script>
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Stat Card 1 -->
+        <div class="bg-slate-900/80 rounded-2xl p-8 border border-slate-800 text-center relative overflow-hidden">
+          <div class="text-5xl font-black text-rose-400 mb-2">75%</div>
+          <h4 class="text-base font-bold text-white mb-2">Insegurança com Custos</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Dos motoristas relatam que o maior medo ao dirigir é ser surpreendido por custos mecânicos imprevistos no orçamento.
+          </p>
+        </div>
+
+        <!-- Stat Card 2 -->
+        <div class="bg-slate-900/80 rounded-2xl p-8 border border-sky-500/30 text-center relative overflow-hidden shadow-lg shadow-sky-500/5">
+          <div class="text-5xl font-black text-sky-400 mb-2">86%</div>
+          <h4 class="text-base font-bold text-white mb-2">Interesse Imediato em Testar</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Dos entrevistados demonstraram interesse instantâneo em agendar uma demonstração gratuita do AutoMind Link.
+          </p>
+        </div>
+
+        <!-- Stat Card 3 -->
+        <div class="bg-slate-900/80 rounded-2xl p-8 border border-slate-800 text-center relative overflow-hidden">
+          <div class="text-5xl font-black text-emerald-400 mb-2">56%</div>
+          <h4 class="text-base font-bold text-white mb-2">Recurso Mais Desejado</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Dos condutores apontam a leitura profunda e preditiva do motor em tempo real como o recurso número 1 indispensável.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= PREÇO & OFERTA PRINCIPAL ================= -->
+  <section id="preco" class="py-20 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-8 sm:p-12 border-2 border-sky-500/50 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 bg-sky-500 text-white font-black text-xs uppercase px-6 py-2 rounded-bl-2xl tracking-widest">
+          Oferta Única de Lançamento
+        </div>
+
+        <div class="text-center max-w-2xl mx-auto">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Adquira o seu AutoMind Link</h2>
+          <p class="mt-2 text-slate-400 text-sm">Investimento acessível que se paga logo no primeiro alerta de manutenção preventiva.</p>
+          
+          <div class="mt-6 flex items-baseline justify-center gap-2">
+            <span class="text-slate-400 text-lg font-medium">Por apenas</span>
+            <span class="text-5xl sm:text-6xl font-black text-white">R$ 350<span class="text-2xl font-normal text-slate-400">,00</span></span>
+          </div>
+          <p class="text-xs font-semibold text-emerald-400 mt-2">Pagamento único • Sem mensalidades obrigatórias</p>
+        </div>
+
+        <!-- Included features -->
+        <div class="mt-8 pt-8 border-t border-slate-800 grid sm:grid-cols-2 gap-4 text-left max-w-xl mx-auto">
+          <div class="flex items-center gap-3 text-sm text-slate-300">
+            <i class="fa-solid fa-circle-check text-sky-400"></i>
+            <span>Scanner OBD-II Inteligente</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-300">
+            <i class="fa-solid fa-circle-check text-sky-400"></i>
+            <span>Alertas Preditivos de Peças</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-300">
+            <i class="fa-solid fa-circle-check text-sky-400"></i>
+            <span>Telemetria em Tempo Real</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-300">
+            <i class="fa-solid fa-circle-check text-sky-400"></i>
+            <span>Conexão 4G e Bluetooth</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-300">
+            <i class="fa-solid fa-circle-check text-sky-400"></i>
+            <span>Aplicativo Android & iOS</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-300">
+            <i class="fa-solid fa-circle-check text-sky-400"></i>
+            <span>Garantia & Suporte Direto</span>
+          </div>
+        </div>
+
+        <div class="mt-10 text-center">
+          <a href="#contato" class="inline-block w-full sm:w-auto px-10 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-xl shadow-sky-500/25 transition transform hover:-translate-y-0.5">
+            Quero Proteger Meu Carro Agora
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= QUEM SOMOS ================= -->
+  <section id="quem-somos" class="py-20 bg-slate-900/50 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">Liderança & Inovação</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Conheça a equipe por trás da AutoMind 2.0</p>
+        <p class="mt-3 text-slate-400 text-sm">Especialistas unidos para transformar a relação entre motoristas e seus veículos.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Kaio -->
+        <div class="bg-slate-900 rounded-2xl p-8 border border-slate-800 text-center hover:border-sky-500/40 transition">
+          <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg shadow-sky-500/20">
+            K
+          </div>
+          <h3 class="text-xl font-extrabold text-white">Kaio</h3>
+          <p class="text-xs font-bold text-sky-400 uppercase tracking-wider mt-0.5 mb-4">CEO & Diretor Geral</p>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Responsável pela liderança estratégica da empresa, definição das metas de crescimento e pelo relacionamento com investidores.
+          </p>
+        </div>
+
+        <!-- Gabriel -->
+        <div class="bg-slate-900 rounded-2xl p-8 border border-slate-800 text-center hover:border-sky-500/40 transition">
+          <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg shadow-indigo-500/20">
+            G
+          </div>
+          <h3 class="text-xl font-extrabold text-white">Gabriel</h3>
+          <p class="text-xs font-bold text-sky-400 uppercase tracking-wider mt-0.5 mb-4">Diretor de Engenharia, TI & Operações</p>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Lidera o desenvolvimento do hardware (placa OBD-II), programação do firmware e integração da infraestrutura de servidores em nuvem.
+          </p>
+        </div>
+
+        <!-- Álvaro -->
+        <div class="bg-slate-900 rounded-2xl p-8 border border-slate-800 text-center hover:border-sky-500/40 transition">
+          <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-cyan-500 to-teal-600 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg shadow-cyan-500/20">
+            Á
+          </div>
+          <h3 class="text-xl font-extrabold text-white">Álvaro</h3>
+          <p class="text-xs font-bold text-sky-400 uppercase tracking-wider mt-0.5 mb-4">Diretor Financeiro, Comercial & Mkt</p>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Gerencia precificação, campanhas digitais de atração, relacionamento direto com o cliente e parcerias estratégicas com oficinas.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CONTATO & AGENDAMENTO ================= -->
+  <section id="contato" class="py-20 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-12">
+        <h2 class="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">Fale Conosco</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Agende uma Demonstração Gratuita</p>
+        <p class="mt-2 text-slate-400 text-sm">Preencha os dados abaixo e entraremos em contato para apresentar a tecnologia.</p>
+      </div>
+
+      <div class="bg-slate-900 rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-xl">
+        <form id="contact-form" class="space-y-6">
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="nome" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Seu Nome</label>
+              <input type="text" id="nome" required placeholder="Ex: Carlos Silva" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm">
+            </div>
+
+            <div>
+              <label for="email" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Seu E-mail</label>
+              <input type="email" id="email" required placeholder="carlos@email.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="whatsapp" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">WhatsApp / Telefone</label>
+              <input type="tel" id="whatsapp" required placeholder="(11) 99999-9999" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm">
+            </div>
+
+            <div>
+              <label for="carro" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Modelo e Ano do Carro</label>
+              <input type="text" id="carro" placeholder="Ex: Onix 2021" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label for="mensagem" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Mensagem ou Dúvida (Opcional)</label>
+            <textarea id="mensagem" rows="4" placeholder="Quero agendar uma demonstração do AutoMind Link..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm resize-none"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-lg shadow-sky-500/20 transition">
+            Enviar Solicitação
+          </button>
+        </form>
+
+        <!-- Form Toast / Feedback Message -->
+        <div id="form-feedback" class="hidden mt-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-center text-sm font-semibold">
+          <i class="fa-solid fa-circle-check mr-2"></i> Solicitação recebida com sucesso! Nossa equipe entrará em contato em breve.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-950 border-t border-slate-900 py-12 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-sky-500 flex items-center justify-center text-white font-bold">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <span class="text-white font-bold text-lg">AutoMind 2.0</span>
+      </div>
+
+      <p class="text-xs text-center">
+        © 2026 AutoMind 2.0. Todos os direitos reservados. "Inteligência veicular ao seu alcance, prevenindo falhas e protegendo o seu bolso."
+      </p>
+
+      <div class="flex gap-4 text-slate-400">
+        <a href="#" class="hover:text-sky-400"><i class="fa-brands fa-instagram text-lg"></i></a>
+        <a href="#" class="hover:text-sky-400"><i class="fa-brands fa-linkedin text-lg"></i></a>
+        <a href="#" class="hover:text-sky-400"><i class="fa-solid fa-envelope text-lg"></i></a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Simple JS Script for Form & Mobile Menu -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Form submission feedback
+    const contactForm = document.getElementById('contact-form');
+    const formFeedback = document.getElementById('form-feedback');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      contactForm.reset();
+      formFeedback.classList.remove('hidden');
+      setTimeout(() => {
+        formFeedback.classList.add('hidden');
+      }, 6000);
+    });
+  </script>
 </body>
 </html>
